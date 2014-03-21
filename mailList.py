@@ -7,8 +7,11 @@ class MailList():
     def getName(self):
         return self.__name
 
-    def getSubscribers(self):
-        return self.subscribers
+    def get_subscribers(self):
+        result = []
+        for name in self.subscribers:
+            result.append((name, self.subscribers[name]))
+        return result
 
     def add_subscriber(self, name, mail):
         self.subscribers[name] = mail

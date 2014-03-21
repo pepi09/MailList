@@ -2,6 +2,7 @@ import sys
 from mailList import MailList
 from subprocess import call
 from glob import glob
+from maillist_file_adapter import MailListFileAdapter
 
 def main():
     #mail = MailList()
@@ -26,6 +27,16 @@ def main():
             list = list.split('\n')
             for i in range(len(list)):
                 print("[" + str(i+1) +"]"+ " " + list[i])
+
+        if command[0] == "add":
+            lists = get_lists()
+            i = int(command[1])
+            name = input("Name: ")
+            email = input("Email ")
+            mail = MailList("%s" %(lists[i]))
+            mail.add_subscriber(name,email)
+            adapter = MailListFileAdapter(mail)
+            adapter.save()
         
                 
 
