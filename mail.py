@@ -31,12 +31,14 @@ def main():
         if command[0] == "add":
             lists = get_lists()
             i = int(command[1])
+           # list[i] = HackBg
             name = input("Name: ")
             email = input("Email ")
-            mail = MailList("%s" %(lists[i]))
+            subscribers = create_subscribers(lists[i-1])
+            mail = MailList("%s" %(lists[i-1]),subscribers)
             mail.add_subscriber(name,email)
             adapter = MailListFileAdapter(mail)
-            adapter.save()
+            adapter.save_for_add(name,email)
         
                 
 
@@ -54,5 +56,19 @@ def get_lists():
     lists = glob("*.txt")
     lists.remove("help.txt")
     return lists
+
+
+def create_subscribers(name):
+    file = open(name,"r")
+    subscribers = file.read()
+    subscribers = subscribers.split('\n')
+    subscribers = list(map(lambda x: x.split(), subscribers))
+    sub = {}
+    for i in range(len(subscribers)):
+        sub[subscribers[i][0]] = subscribers[i][2]
+    return sub
+
+# def main():
+#     create_subscribers("HackBg")
 if __name__ == '__main__':
     main()
