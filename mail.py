@@ -2,6 +2,7 @@ import sys
 from mailList import MailList
 from subprocess import call
 from glob import glob
+from maillist_file_adapter import MailListFileAdapter
 
 def main():
     #mail = MailList()
@@ -13,11 +14,29 @@ def main():
             call("py help.py",shell = True)
         
         if command[0] == "show_lists":
-            lists = glob("*.txt")
-            lists.remove("help.txt")
+            lists = get_lists()
             for i in range(len(lists)):
                 lists[i] = lists[i][0:len(lists[i])-4]
                 print("[" + str(i+1) +"]"+ " - " + lists[i])
+
+        if command[0] == "show_list":
+            lists = get_lists()
+            i = int(command[1])
+            l = open("%s" %(lists[i-1]),"r")
+            list = l.read()
+            list = list.split('\n')
+            for i in range(len(list)):
+                print("[" + str(i+1) +"]"+ " " + list[i])
+
+        if command[0] == "add":
+            lists = get_lists()
+            i = int(command[1])
+            name = input("Name: ")
+            email = input("Email ")
+            mail = MailList("%s" %(lists[i]))
+            mail.add_subscriber(name,email)
+            adapter = MailListFileAdapter(mail)
+            adapter.save()
         
                 
 
@@ -31,6 +50,9 @@ def main():
 
 
 
-
+def get_lists():
+    lists = glob("*.txt")
+    lists.remove("help.txt")
+    return lists
 if __name__ == '__main__':
     main()
