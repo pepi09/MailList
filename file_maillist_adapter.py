@@ -10,6 +10,7 @@ class FileMailListAdapter():
     def make_subscribers(self):
         file = open(self.__mail.getName(), "r")
         contents = file.read()
+        file.close()
         contents = list(map(lambda x: x.split(), contents.split('\n')))
         # contents = list(map(lambda x: (x[0], x[2]), contents))
         # self.__mail.subscribers = contents
