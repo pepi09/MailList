@@ -1,6 +1,7 @@
 import sys
 from mailList import MailList
 from subprocess import call
+from glob import glob
 
 def main():
     #mail = MailList()
@@ -10,8 +11,15 @@ def main():
         
         if command[0] == "help":
             call("py help.py",shell = True)
+        
         if command[0] == "show_lists":
-            pass
+            lists = glob("*.txt")
+            lists.remove("help.txt")
+            for i in range(len(lists)):
+                lists[i] = lists[i][0:len(lists[i])-4]
+                print("[" + str(i+1) +"]"+ " - " + lists[i])
+        
+                
 
 
 
