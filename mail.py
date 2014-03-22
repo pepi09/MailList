@@ -81,6 +81,12 @@ def main():
         if command[0] == "exit":
             break
 
+        if command[0] == "create":
+            mail = MailList(command[1] + ".txt")
+            f = MailListFileAdapter(mail)
+            f.save()
+            print ("New list <" + command[1] + "> was created")
+
 
 def get_lists():
     lists = glob("*.txt")
