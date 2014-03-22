@@ -65,7 +65,18 @@ def main():
             adapter = MailListFileAdapter(mail)
             adapter.save()
 
+        if command[0] == "remove_subscriber":
+            lists = get_lists()
+            i = int(command[1])
+            j = int(command[2])
 
+            f = FileMailListAdapter(lists[i - 1])
+            mail = f.getMail()
+            subscribers = mail.get_subscribers()
+            mail.remove_subscriber(subscribers[j - 1][0])
+
+            adapter = MailListFileAdapter(mail)
+            adapter.save()
 
         if command[0] == "exit":
             break
