@@ -26,7 +26,7 @@ class FileMailListAdapter():
 
 
 def main():
-    f = FileMailListAdapter("Otbor_Pochivka")
+    f = FileMailListAdapter("Otbor_Pochivka.txt")
     mail = f.getMail()
     print (mail.get_subscribers())
     mail.add_subscriber("bla", "bla@bla")

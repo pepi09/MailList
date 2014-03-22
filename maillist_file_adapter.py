@@ -24,7 +24,7 @@ class MailListFileAdapter():
 
 
 def main():
-    _list = MailList("Otbor Pochivka")
+    _list = MailList("Otbor Pochivka.txt")
     _list.add_subscriber("Tsveta", "tsveta@tsveta")
     _list.add_subscriber("Pepa", "pepa@pepa")
 

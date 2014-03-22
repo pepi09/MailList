@@ -11,11 +11,13 @@ class MailList():
         result = []
         for name in self.subscribers:
             result.append((name, self.subscribers[name]))
-        return result
+        return sorted(result)
 
     def add_subscriber(self, name, mail):
         self.subscribers[name] = mail
-        return self.subscribers
+        return sorted(self.subscribers)
 
-if __name__ == '__main__':
-    main()
+    def update_subscriber(self, name, new_name, new_mail):
+        del self.subscribers[name]
+        self.subscribers[new_name] = new_mail
+        return sorted(self.subscribers)
