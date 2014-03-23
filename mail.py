@@ -18,7 +18,7 @@ def main():
             lists = get_lists()
             if not len(lists) == 0:
                 for i in range(len(lists)):
-                    lists[i] = lists[i][0:len(lists[i]) - 4] #zashto 4
+                    lists[i] = lists[i][0:len(lists[i]) - 4]
                     print("[" + str(i + 1) + "]" + " - " + lists[i])
             else:
                 print ("There are no email lists!")
@@ -66,22 +66,27 @@ def main():
                 mail = f.getMail()
                 subscribers = mail.get_subscribers()
                 if j <= len(subscribers):
+                    print("Updating: %s - %s \n Pres enter if you want the field to remain the same" %(subscribers[j - 1][0],subscribers[j - 1][1]))
                     old_name = subscribers[j - 1][0]
+                    old_email = subscribers[j - 1][1]
 
                     name = input("enter new name> ")
                     email = input("enter new email> ")
 
-                    if name == "":
-                        mail.update_subscriber(old_name, old_name, email)
-                    else:
+                    if name != "" and email != "":
                         mail.update_subscriber(old_name, name, email)
+                    elif name == "" and email != "":
+                        mail.update_subscriber(old_name, old_name, email)
+                    elif name != "" and email == "":
+                        mail.update_subscriber(old_name, name, old_email)
+                    else:
+                        mail.update_subscriber(old_name,old_name,old_email)
                     adapter = MailListFileAdapter(mail)
                     adapter.save()
                 else:
-                    print ("There is not " + str(j) + " subscriber in\
-                        the mail")
+                    print ("Subscriber with identifider <" + str(j) + "> not found in the list." )
             else:
-                print("There is not " + str(i) + "the mail list")
+                print("List with unique identifier <" + str(i) + "> was not found.")
 
         if command[0] == "remove_subscriber":
             lists = get_lists()

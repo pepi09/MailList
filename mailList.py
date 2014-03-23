@@ -23,9 +23,9 @@ class MailList():
         self.subscribers[name] = mail
         return sorted(self.subscribers)
 
-    def update_subscriber(self, name, new_name, new_mail):
+    def update_subscriber(self, name, new_name, new_email):
         del self.subscribers[name]
-        self.subscribers[new_name] = new_mail
+        self.subscribers[new_name] = new_email
         return sorted(self.subscribers)
 
     def remove_subscriber(self, name):
