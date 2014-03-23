@@ -137,6 +137,23 @@ was not found")
                 print("List with unique identifier <" + str(i) + "> \
 was not found.")
 
+        if command[0] == "search_email":
+            lists = get_lists()
+            result = []
+            for i in range(len(lists)):
+                f = FileMailListAdapter(lists[i])
+                mail = f.getMail()
+                subscribers = mail.get_subscribers()
+                for j in range(len(subscribers)):
+                    if command[1] == subscribers[j][1]:
+                        result.append(lists[i][:len(lists[i]) - 4:])
+            if len(result) == 0:
+                print("<" + command[1] + "> was not found in the \
+current mailing lists.")
+            else:
+                for k in range(len(result)):
+                    print("[" + str(k + 1) + "] " + result[k])
+
 
 def get_lists():
     lists = glob("*.txt")
