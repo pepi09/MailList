@@ -49,10 +49,13 @@ def main():
 
             f = FileMailListAdapter(lists[i])
             mail = f.getMail()
-            mail.add_subscriber(name, email)
-
-            adapter = MailListFileAdapter(mail)
-            adapter.save()
+            emails = mail.get_emails()
+            if emails.count(email) == 0:
+                mail.add_subscriber(name, email)
+                adapter = MailListFileAdapter(mail)
+                adapter.save()
+            else:
+                print("A person with the given email <%s> is already in the list!" %(email))
 
         if command[0] == "update_subscriber":
             lists = get_lists()
