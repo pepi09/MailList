@@ -11,14 +11,16 @@ class FileMailListAdapter():
         file = open(self.__mail.getName(), "r")
         contents = file.read()
         file.close()
-        contents = list(map(lambda x: x.split(), contents.split('\n')))
+        if not len(contents) == 0:
+            contents = list(map(lambda x: x.split(), contents.split('\n')))
         # contents = list(map(lambda x: (x[0], x[2]), contents))
         # self.__mail.subscribers = contents
         # return contents
-        dict_ = {}
-        for item in contents:
-            dict_[item[0]] = item[2]
-        return dict_
+            dict_ = {}
+            for item in contents:
+                dict_[item[0]] = item[2]
+            return dict_
+        return {}
 
     def getMail(self):
         self.__mail.subscribers = self.make_subscribers()

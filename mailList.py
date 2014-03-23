@@ -21,3 +21,10 @@ class MailList():
         del self.subscribers[name]
         self.subscribers[new_name] = new_mail
         return sorted(self.subscribers)
+
+    def remove_subscriber(self, name):
+        del self.subscribers[name]
+        return sorted(self.subscribers)
+
+    def set_name(self, name):
+        self.__name = name

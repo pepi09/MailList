@@ -11,7 +11,8 @@ class MailListFileAdapter():
 
     def prepare_for_save(self):
         subscribers = self.__mail_list.get_subscribers()
-        subscribers = map(lambda x: "{} - {}".format(x[0], x[1]), subscribers)
+        if not len(subscribers) == 0:
+            subscribers = map(lambda x: "{} - {}".format(x[0], x[1]), subscribers)
 
         return sorted(subscribers)
 
