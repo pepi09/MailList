@@ -6,18 +6,19 @@ from file_maillist_adapter import FileMailListAdapter
 
 
 def main():
+    print("Hello Stranger! This is a cutting-edge, console-based mail-list! Type help, to see a list of commands.")
     while True:
         command = input(">")
         command = command.split()
 
         if command[0] == "help":
-            call("py help.py", shell=True)
+            call("python help.py", shell=True)
 
         if command[0] == "show_lists":
             lists = get_lists()
             if not len(lists) == 0:
                 for i in range(len(lists)):
-                    lists[i] = lists[i][0:len(lists[i]) - 4]
+                    lists[i] = lists[i][0:len(lists[i]) - 4] #zashto 4
                     print("[" + str(i + 1) + "]" + " - " + lists[i])
             else:
                 print ("There are no email lists!")
@@ -26,14 +27,18 @@ def main():
             """trqbva da se oprawim da ne pokazwa [1] kogato nqma email"""
             lists = get_lists()
             i = int(command[1])
-            l = open("%s" % (lists[i - 1]), "r")
-            list = l.read()
-            list = list.split('\n')
-            if not list == ['']:
-                for i in range(len(list)):
-                    print("[" + str(i + 1) + "]" + " " + list[i])
+            try:
+                l = open("%s" % (lists[i - 1]), "r")
+            except IndexError:
+                print("List with unique identifier %s was not found!" %(i))
             else:
-                print ("The email list is empty!")
+                list = l.read()
+                list = list.split('\n')
+                if not list == ['']:
+                    for i in range(len(list)):
+                        print("[" + str(i + 1) + "]" + " " + list[i])
+                else:
+                    print ("The mail list is empty!")
 
         if command[0] == "add":
             lists = get_lists()
@@ -70,10 +75,10 @@ def main():
                     adapter = MailListFileAdapter(mail)
                     adapter.save()
                 else:
-                    print ("There is not " + str(j) + "th subscriber in\
+                    print ("There is not " + str(j) + " subscriber in\
                         the mail")
             else:
-                print("There is not " + str(i) + "th mail list")
+                print("There is not " + str(i) + "the mail list")
 
         if command[0] == "remove_subscriber":
             lists = get_lists()
@@ -90,10 +95,9 @@ def main():
                     adapter = MailListFileAdapter(mail)
                     adapter.save()
                 else:
-                    print ("There is not " + str(j) + "th subscriber in \
-the mail")
+                    print ("There is not " + str(j) + "the subscriber in the mail")
             else:
-                print("There is not " + str(i) + "th mail list")
+                print("There is not " + str(i) + "the mail list")
 
         if command[0] == "exit":
             break
@@ -121,6 +125,7 @@ was not found")
 
                 adapter = MailListFileAdapter(mail)
                 adapter.save()
+                print("Updated " + lists[i - 1] + " to " + command[2])
 
         if command[0] == "delete":
             lists = get_lists()
