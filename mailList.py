@@ -13,6 +13,9 @@ class MailList():
             result.append((name, self.subscribers[name]))
         return sorted(result)
 
+    def return_subscribers(self):
+        return self.subscribers
+
     def get_emails(self):
         emails = []
         for name in self.subscribers:

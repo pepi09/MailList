@@ -3,6 +3,7 @@ from subprocess import call
 from glob import glob
 from maillist_file_adapter import MailListFileAdapter
 from file_maillist_adapter import FileMailListAdapter
+import json
 
 
 def main():
@@ -25,7 +26,6 @@ def main():
                     print ("There are no email lists!")
 
         if command[0] == "show_list":
-            """trqbva da se oprawim da ne pokazwa [1] kogato nqma email"""
             lists = get_lists()
             i = int(command[1])
             try:
@@ -203,6 +203,27 @@ current mailing lists.")
 
                 adapter = MailListFileAdapter(new_mail)
                 adapter.save()
+
+        if command[0] == "export":
+            lists = get_lists()
+            i = int(command[1]) - 1
+            try:
+                f = FileMailListAdapter(lists[i])
+            except IndexError:
+                print("List with unique identifier <" + str(i) + "> was not found.")
+            else:
+                print("Exported <%s> to <%s.json>" %(lists[i][:len(lists[i]) - 4:],lists[i][:len(lists[i]) - 4:]))
+                mail = f.getMail()
+                subscribers = [mail.return_subscribers()]
+
+                json_file = json.dump(subscribers,io,sort_keys=True,indent=4)
+                print(json_file)
+                json_list = open("%s.json" %(lists[i][:len(lists[i]) - 4:],"w"))
+                json_list.write(json_file)
+
+
+
+
 
 
 def get_lists():
