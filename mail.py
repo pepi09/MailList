@@ -15,13 +15,14 @@ def main():
             call("python help.py", shell=True)
 
         if command[0] == "show_lists":
-            lists = get_lists()
-            if not len(lists) == 0:
-                for i in range(len(lists)):
-                    lists[i] = lists[i][0:len(lists[i]) - 4]
-                    print("[" + str(i + 1) + "]" + " - " + lists[i])
-            else:
-                print ("There are no email lists!")
+            if len(command) == 1:
+                lists = get_lists()
+                if not len(lists) == 0:
+                    for i in range(len(lists)):
+                        lists[i] = lists[i][0:len(lists[i]) - 4]
+                        print("[" + str(i + 1) + "]" + " - " + lists[i])
+                else:
+                    print ("There are no email lists!")
 
         if command[0] == "show_list":
             """trqbva da se oprawim da ne pokazwa [1] kogato nqma email"""
@@ -103,9 +104,9 @@ def main():
                     adapter = MailListFileAdapter(mail)
                     adapter.save()
                 else:
-                    print ("There is not " + str(j) + "the subscriber in the mail")
+                    print ("There is not " + str(j) + "th subscriber in the mail")
             else:
-                print("There is not " + str(i) + "the mail list")
+                print("There is not " + str(i) + "th mail list")
 
         if command[0] == "exit":
             break
@@ -166,6 +167,42 @@ current mailing lists.")
             else:
                 for k in range(len(result)):
                     print("[" + str(k + 1) + "] " + result[k])
+
+
+        if command[0] == "merge_lists":
+            lists = get_lists()
+            i = int(command[1]) - 1
+            j = int(command[2]) - 1
+            new_list = command[3]
+            try:
+                list1 = lists[i]
+                list2 = lists[j]
+            except IndexError:
+                print("Can`t find lists with the given number")
+            else:
+                print("Merged lists <%s> and <%s> into <%s>" %(lists[i][:len(lists[i]) - 4:],lists[j][:len(lists[j]) - 4:],new_list))
+                new_mail = MailList(new_list + ".txt")
+                f = MailListFileAdapter(new_mail)
+                f.save()
+                
+                m1 = FileMailListAdapter(lists[i])
+                mail1 = m1.getMail()
+                subs1 = mail1.get_subscribers()
+                emails1 = mail1.get_emails()
+
+                for name in subs1:
+                    new_mail.add_subscriber(name[0],name[1])
+
+                m2 = FileMailListAdapter(lists[j])
+                mail2 = m2.getMail()
+                subs2 = mail2.get_subscribers()
+
+                for name in subs2:
+                    if emails1.count(name[1]) == 0:
+                        new_mail.add_subscriber(name[0],name[1])
+
+                adapter = MailListFileAdapter(new_mail)
+                adapter.save()
 
 
 def get_lists():
