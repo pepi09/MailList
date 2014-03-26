@@ -216,13 +216,11 @@ current mailing lists.")
                 mail = f.getMail()
                 subscribers = mail.return_subscribers()
 
-                json_file = json.dumps(subscribers,sort_keys=True,indent=4)
+                json_file = json.dumps(subscribers,sort_keys=True,indent=4,ensure_ascii=False)
                 print(json_file)
-                json_list = open("%s.json" %(lists[i][:len(lists[i]) - 4:],"w"))
-                json_list.write(json_file)
+                json_list = open("%s.json" %(lists[i][:len(lists[i]) - 4:]),"w")
+                json_list.write("%s" %(json.loads(json_file)))
 
-# def jdefault(o):
-#     return o.__dict__
 
 
 
