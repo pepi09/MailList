@@ -1,3 +1,5 @@
+from subscribers import Subscriber
+
 class MailList():
     """docstring for MailList"""
     def __init__(self, name):
@@ -14,7 +16,12 @@ class MailList():
         return sorted(result)
 
     def return_subscribers(self):
-        return self.subscribers
+        contacts = []
+        for name in self.subscribers:
+            subscriber = Subscriber(name,self.subscribers[name])
+            contacts.append(subscriber.get_subscriber())
+        return contacts
+
 
     def get_emails(self):
         emails = []

@@ -104,9 +104,9 @@ def main():
                     adapter = MailListFileAdapter(mail)
                     adapter.save()
                 else:
-                    print ("There is not " + str(j) + "th subscriber in the mail")
+                    print ("Subscriber with identifider <" + str(j) + "> not found in the list.")
             else:
-                print("There is not " + str(i) + "th mail list")
+                print("List with unique identifier <"+ str(i) + "> was not found")
 
         if command[0] == "exit":
             break
@@ -214,14 +214,15 @@ current mailing lists.")
             else:
                 print("Exported <%s> to <%s.json>" %(lists[i][:len(lists[i]) - 4:],lists[i][:len(lists[i]) - 4:]))
                 mail = f.getMail()
-                subscribers = [mail.return_subscribers()]
+                subscribers = mail.return_subscribers()
 
-                json_file = json.dump(subscribers,io,sort_keys=True,indent=4)
+                json_file = json.dumps(subscribers,sort_keys=True,indent=4)
                 print(json_file)
                 json_list = open("%s.json" %(lists[i][:len(lists[i]) - 4:],"w"))
                 json_list.write(json_file)
 
-
+# def jdefault(o):
+#     return o.__dict__
 
 
 
